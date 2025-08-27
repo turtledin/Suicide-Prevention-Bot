@@ -12,6 +12,13 @@ const pool = mysql.createPool({
     database: process.env.DB_DATABASE,
 }).promise();
 
+export async function CreateDatabase() {
+    await pool.query("CREATE TABLE IF NOT EXISTS mutedusers (user_id VARCHAR(255) PRIMARY KEY, muted BOOLEAN)");
+    await pool.query("CREATE TABLE IF NOT EXISTS serverlanguage (server_id VARCHAR(255) PRIMARY KEY, language CHAR(2))");
+    await pool.query("CREATE TABLE IF NOT EXISTS dmmutedusers (user_id VARCHAR(255) PRIMARY KEY, muted BOOLEAN)");
+    await pool.query("CREATE TABLE IF NOT EXISTS dmtimes (user_id VARCHAR(255) PRIMARY KEY, lastdm BIGINT)");
+}
+
 async function checkMutedUser(userid) {
     const [rows] = await pool.query("SELECT * from mutedusers WHERE user_id = ?", [userid]);
     if (rows.length == 0) {

@@ -1,7 +1,6 @@
 const { Client, Events, Collection, GatewayIntentBits, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const type = require('node:os');
 const { I18n } = require('i18n');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -9,7 +8,10 @@ const token = process.env.BOT_TOKEN;
 const { supportedLanguages, defaultLanguage, issuechannel } = require('./config.json');
 
 
-import('./database.mjs').then((db) => {
+import('./database.mjs').then(async (db) => {
+
+    // create tables if they do not exist
+    await db.CreateDatabase(); 
 
     // test import
     if (db.check() == "pass") {
@@ -195,8 +197,6 @@ import('./database.mjs').then((db) => {
         } else {
             lang = dblang;
         }
-
-        let LCM = message.content.toLowerCase(); //Lower case message text
 
         if (message.mentions.users.first() === client.user) {
             return require('./events/mention.cjs').execute(message, lang);
