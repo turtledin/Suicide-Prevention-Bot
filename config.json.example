@@ -3,6 +3,7 @@
 		["en", "english", "english"],
 		["es","spanish", "espanol"],
         ["fr", "french", "français"]
+		["ru", "russian", "Русский"]
 	],
     "themecolor": "#555555",
     "website": "https://spbot.9021007.xyz",
